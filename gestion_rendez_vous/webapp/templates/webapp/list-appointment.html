@@ -1,0 +1,47 @@
+{% extends "webapp/base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>List of Appointments</h2>
+    <a class="btn btn-outline-secondary btn-sm" href="{% url 'add-appointment' %}">
+        Add a new appointment &nbsp; <i class="fa fa-plus-circle" aria-hidden="true"></i>
+    </a>
+    <br><br>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th class="bg-primary text-white">Id Appointment</th>
+                    <th class="bg-primary text-white">Appointment Date</th>
+                    <th class="bg-primary text-white">Appointment Time</th>
+                    <th class="bg-primary text-white">end of the Appointment</th>
+                    <th class="bg-primary text-white">Reason</th>
+                    <th class="bg-primary text-white">Status</th>
+                    <th class="bg-primary text-white">Notes</th>
+                    <th class="bg-primary text-white">Doctor</th>
+                    <th class="bg-primary text-white">Patient</th>
+                    <th class="bg-primary text-white">To Update</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                {% for appointment in appointments %}
+                <tr>
+                    <td>{{ appointment.id }}</td>
+                    <td>{{ appointment.appointment_date }}</td>
+                    <td>{{ appointment.appointment_time }}</td>
+                    <td>{{ appointment.end_time }}</td>
+                    <td>{{ appointment.reason }}</td>
+                    <td>{{ appointment.status}}</td>
+                    <td>{{ appointment.notes }}</td>
+                    <td>{{ appointment.doctor.first_name }} {{ appointment.doctor.last_name }}</td>
+                    <td>{{ appointment.patient.first_name }} {{ appointment.patient.last_name }}</td>
+                    <td> <a href="{%url 'appointment' appointment.id%}"> view appointment</a> </td>
+                    
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

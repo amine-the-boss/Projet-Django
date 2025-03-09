@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Calendar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css" />
+
+    <style>
+        /* General styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa; /* Light gray */
+        }
+
+        .container {
+            margin-top: 20px;
+        }
+
+        /* Calendar container */
+        #calendar {
+            max-width: 900px;
+            margin: 0 auto; /* Center the calendar */
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px; /* Added padding */
+        }
+
+         /* Calendar header styles */
+        .fc-toolbar {
+            background-color: #fff; /* Light background */
+            border-bottom: 1px solid #e9ecef; /* Light border */
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .fc-toolbar h2 {
+            font-size: 1.25rem; /* Adjust font size */
+            font-weight: bold;
+            margin: 0;
+            color: #343a40; /* Dark text */
+        }
+
+        /* Calendar buttons */
+        .fc-toolbar button {
+            background-color: transparent;
+            color: #343a40; /* Dark text */
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .fc-toolbar button:hover {
+            background-color: #e9ecef; /* Light gray hover */
+        }
+
+        /* Additional styles for specific buttons (optional) */
+        .fc-today-button {
+            background-color: #f0f3f8; /* Lighter background for today button */
+        }
+
+        /* Style for the back button */
+        .back-button {
+            margin-top: 20px;
+            text-align: center; /* Align the button in the center */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <h2 class="text-center">Appointment Calendar</h2> 
+            <div id="calendar"></div>
+            <div class="back-button">
+                <a href="{% url 'list-patient' %}" class="btn btn-secondary">Back to Patient List</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            var calendar = $('#calendar').fullCalendar({
+                // FullCalendar options...
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                eventClick: function(calEvent, jsEvent, view) {
+                    // Redirect to the appointment view page
+                    window.location.href = '/appointment/' + calEvent.id;
+                },
+                // Updated event rendering to include start and end times
+                eventRender: function(event, element) {
+                    var start_time = moment(event.start).format('HH:mm'); // Format start time
+                    var end_time = event.end ? moment(event.end).format('HH:mm') : ''; // Format end time if available
+                    var time_html = '<span class="fc-event-time">' + start_time + ' - ' + end_time + '</span>';
+                    element.find('.fc-title').before(time_html); // Insert time before event title
+                },
+                selectable: true,
+                selectHelper: true,
+                select: function(start, end) {
+                    var patient = prompt('Enter patient:');
+                    var doctor = prompt('Enter doctor:');
+                    var appointment_date = prompt('Enter appointment date (YYYY-MM-DD):');
+                    var appointment_time = prompt('Enter appointment time (HH:MM):');
+                    var end_time = prompt('Enter end time (HH:MM) (optional):');
+                    var reason = prompt('Enter reason:');
+                    var status = prompt('Enter status:');
+                    var notes = prompt('Enter notes (optional):');
+                    
+                    if (patient && doctor && appointment_date && appointment_time && reason && status) {
+                        var eventData = {
+                            patient: patient,
+                            doctor: doctor,
+                            appointment_date: appointment_date,
+                            appointment_time: appointment_time,
+                            end_time: end_time ? end_time : null,
+                            reason: reason,
+                            status: status,
+                            notes: notes ? notes : null,
+                            start: start.format(),
+                            end: end.format()
+                        };
+                        // Send the appointment data to the server to save
+                        $.ajax({
+                            type: "POST",
+                            url: '/add_appointment',
+                            data: eventData,
+                            success: function(response) {
+                                // If appointment is added successfully, render it on the calendar
+                                calendar.fullCalendar('renderEvent', eventData, true);
+                            },
+                            error: function() {
+                                alert('Failed to add appointment.');
+                            }
+                        });
+                    }
+                    calendar.fullCalendar('unselect');
+                }
+            });
+            
+            // Fetch appointments for the logged-in user
+            $.ajax({
+                type: "GET",
+                url: '/get_user_appointments',
+                dataType: "json",
+                success: function (data) {
+                    // Iterate through the received events and add them to the calendar
+                    $.each(data, function (index, event) {
+                        calendar.fullCalendar('renderEvent', event, true);
+                    });
+                },
+                error: function () {
+                    alert('Failed to fetch appointments.');
+                }
+            });
+        });
+        
+        
+    </script>  
+</body>
+</html>

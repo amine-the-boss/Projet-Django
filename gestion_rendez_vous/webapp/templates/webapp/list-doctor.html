@@ -1,0 +1,49 @@
+{% extends "webapp/base.html" %}
+
+{% block content %}
+
+    <h1>Welcome {{ user }}</h1>
+
+    <hr>
+
+    <a class="btn btn-outline-secondary btn-sm" href="{% url 'add-doctor' %}">
+        Add a new doctor &nbsp; <i class="fa fa-plus-circle" aria-hidden="true"></i>
+    </a>
+    <br><br>
+
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th class="bg-primary text-white">First Name</th>
+                    <th class="bg-primary text-white">Last Name</th>
+                    <th class="bg-primary text-white">Specialty</th>
+                    <th class="bg-primary text-white">Gender</th>
+                    <th class="bg-primary text-white">Date of Birth</th>
+                    <th class="bg-primary text-white">Address</th>
+                    <th class="bg-primary text-white">Phone Number</th>
+                    <th class="bg-primary text-white">Marital Status</th>
+                    <th class="bg-primary text-white">Date joined</th>
+                    <th class="bg-primary text-white">To Update</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for doctor in doctors %}
+                <tr>
+                    <td>{{ doctor.first_name }}</td>
+                    <td>{{ doctor.last_name }}</td>
+                    <td>{{ doctor.specialty }}</td>
+                    <td>{{ doctor.gender }}</td>
+                    <td>{{ doctor.date_of_birth|date:"Y-m-d" }}</td>
+                    <td>{{ doctor.address }}</td>
+                    <td>{{ doctor.phone_number }}</td>
+                    <td>{{ doctor.marital_status }}</td>
+                    <td>{{ doctor.created_at }}</td>
+                    <td> <a href="{%url 'doctor' doctor.id%}"> view doctor</a> </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

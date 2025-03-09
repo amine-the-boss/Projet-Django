@@ -1,0 +1,20 @@
+{% extends "webapp/base.html" %}
+
+{% block content %}
+    <div class="container">
+        <h1>Resource Details</h1>
+        <hr>
+        <dl class="row">
+            <dt class="col-sm-3">Name:</dt>
+            <dd class="col-sm-9">{{ resource.name }}</dd>
+            <dt class="col-sm-3">Description:</dt>
+            <dd class="col-sm-9">{{ resource.description }}</dd>
+            <dt class="col-sm-3">Quantity:</dt>
+            <dd class="col-sm-9">{{ resource.quantity }}</dd>
+            <dt class="col-sm-3">State:</dt>
+            <dd class="col-sm-9">{{ resource.get_state_display }}</dd>
+        </dl>
+        <a href="{% url 'list-resources' %}" class="btn btn-secondary">Back</a>
+        <a href="{% url 'update-resource' resource.pk %}" class="btn btn-info">Edit</a>
+    </div>
+{% endblock %}

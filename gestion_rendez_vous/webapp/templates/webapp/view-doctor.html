@@ -1,0 +1,45 @@
+{% extends 'webapp/base.html' %}
+
+{% block content %}
+
+    <div class="card">
+
+        <div class="card-body">
+
+            <i class="fa fa-user-circle-o" aria-hidden="true"></i> &nbsp;
+
+            <strong>   
+                {{ doctor.last_name|upper }} {{ doctor.first_name }}
+            </strong>
+
+            <hr> 
+           
+            <p> <strong> ID: </strong> {{ doctor.id }} </p>
+
+            <p> <strong> Gender: </strong> {{ doctor.gender }} </p>
+
+            <p> <strong> Date of birth: </strong> {{ doctor.date_of_birth }} </p>
+
+            <p> <strong> Address: </strong> {{ doctor.address }} </p>
+            <p> <strong> City: </strong> {{ doctor.city }} </p>
+            <p> <strong> Zip code: </strong> {{ doctor.zip_code }} </p>
+            <p> <strong> Phone number: </strong> {{ doctor.phone_number }} </p>
+            <p> <strong> Marital status: </strong> {{ doctor.marital_status }} </p>
+            <p> <strong> Emergency contact name: </strong> {{ doctor.emergency_contact_name }} </p>
+            <p> <strong> Emergency contact phone: </strong> {{ doctor.emergency_contact_phone }} </p>
+
+            <p> <strong> Creation date: </strong> {{ doctor.created_at }} </p>
+
+        </div>
+
+    </div>
+
+    <br>
+
+    <a href="{% url 'list-doctor' %}" class="btn btn-secondary"> Return &nbsp; <i class="fa fa-arrow-left" aria-hidden="true"></i> </a>
+
+    &nbsp;
+
+    <a href="{% url 'update-doctor' doctor.id %}" class="btn btn-info"> Update record &nbsp; <i class="fa fa-plus" aria-hidden="true"></i> </a>
+
+{% endblock %}

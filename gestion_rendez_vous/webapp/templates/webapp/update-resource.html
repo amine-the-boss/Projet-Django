@@ -1,0 +1,13 @@
+{% extends "webapp/base.html" %}
+
+{% block content %}
+    <div class="container">
+        <h1>Edit Resource</h1>
+        <hr>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Update Resource</button>
+        </form>
+    </div>
+{% endblock %}

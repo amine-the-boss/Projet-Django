@@ -1,0 +1,39 @@
+{% extends "webapp/base.html" %}
+
+{% block content %}
+    <div class="container">
+        <h1>Resource List</h1>
+        <hr>
+        <a class="btn btn-outline-secondary btn-sm" href="{% url 'add-resource' %}">
+            Add a new resource &nbsp; <i class="fa fa-plus-circle"></i>
+        </a>
+        <br><br>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Quantity</th>
+                        <th>State</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for resource in resources %}
+                    <tr>
+                        <td>{{ resource.name }}</td>
+                        <td>{{ resource.description }}</td>
+                        <td>{{ resource.quantity }}</td>
+                        <td>{{ resource.get_state_display }}</td>
+                        <td>
+                            <a href="{% url 'view-resource' resource.pk %}" class="btn btn-primary btn-sm">View</a>
+                            <a href="{% url 'update-resource' resource.pk %}" class="btn btn-info btn-sm">Edit</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

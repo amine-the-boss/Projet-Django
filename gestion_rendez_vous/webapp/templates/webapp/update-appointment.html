@@ -1,0 +1,72 @@
+{% extends 'webapp/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <div class="container bg-light shadow-md p-5 form-layout">
+
+        <h3> Update a doctor </h3>
+
+        <h6> Start changing the doctor's info. </h6>
+
+        <hr>
+        <br>
+
+        <form method="POST" autocomplete="off">
+
+            {% csrf_token %}
+
+                {{ form.patient|as_crispy_field }}
+            
+            <br>
+            
+                {{ form.doctor|as_crispy_field  }}
+            <br>
+
+                {{ form.appointment_date |as_crispy_field }}
+
+            <br>
+            
+                {{ form.appointment_time|as_crispy_field  }}
+            
+            <br>
+
+                {{ form.end_time|as_crispy_field  }}
+           
+           <br>
+            
+                {{ form.reason|as_crispy_field  }}
+            
+            <br>
+
+                {{ form.status|as_crispy_field  }}
+            
+            <br>
+
+                {{ form.notes |as_crispy_field }}
+
+            <br>
+
+            <button type="submit" class="btn btn-primary"> 
+                
+                Update the appointment's info &nbsp; <i class="fa fa-check" aria-hidden="true"></i>
+
+            </button>
+
+            &nbsp;
+
+            <a href="{% url 'list-appointment' %}" class="btn btn-secondary"> 
+
+                Return &nbsp; <i class="fa fa-arrow-left" aria-hidden="true"></i>
+
+            </a>
+
+        </form>
+
+
+    </div>
+
+    <br>
+
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'webapp/base.html' %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamline Medical Appointments</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Custom CSS for index page */
+        body {
+            background-color: #f8f9fa; /* Light gray background */
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+
+        .btn-primary {
+            background-color: #007bff; /* Blue */
+            border-color: #007bff; /* Blue */
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+            border-color: #0056b3; /* Darker blue on hover */
+        }
+
+        .footer {
+            background-color: #343a40; /* Dark gray footer */
+            color: #fff; /* White text */
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            padding: 10px 0;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div class="container text-center mt-5">
+        <h1 class="display-4">Streamline Your Medical Appointments with Ease</h1>
+        <p class="lead">Keep track of your patients effectively!</p>
+        <hr class="my-4">
+        <a class="btn btn-primary btn-lg" href="{% url 'register' %}" role="button">
+            Create your account &nbsp; <i class="fa fa-user-plus" aria-hidden="true"></i>
+        </a>
+    <br>
+    <br>
+    <br>
+    <br>
+        
+    </div>
+    <br>
+    <br>
+</body>
+
+<footer class="footer text-center py-3">
+    <p>&copy; 2024 Appointment Management System</p>
+</footer>
+
+{% endblock %}

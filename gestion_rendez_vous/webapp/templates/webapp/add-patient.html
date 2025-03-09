@@ -1,0 +1,83 @@
+{% extends 'webapp/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <body>
+
+        <div class="container bg-light shadow-md p-5 form-layout">
+
+            <h3> Add a patient </h3>
+
+            <h6> Start adding in the required details for the patient. </h6>
+
+            <hr>
+            <br>
+
+            <form method="POST" autocomplete="off">
+
+                {% csrf_token %}
+
+                {{form.first_name|as_crispy_field}}
+
+                <br>
+
+                {{form.last_name|as_crispy_field}}
+
+                <br>
+
+                {{form.gender|as_crispy_field}}
+
+                <br>
+
+                {{form.date_of_birth|as_crispy_field}}
+
+                <br>
+
+                {{form.address|as_crispy_field}}
+
+                <br>
+
+                {{form.city|as_crispy_field}}
+
+                <br>
+
+                {{form.zip_code|as_crispy_field}}
+
+                <br>
+
+                {{form.phone_number|as_crispy_field}}
+
+                <br>
+
+                {{form.marital_status|as_crispy_field}}
+
+                <br>
+
+                {{form.emergency_contact_name|as_crispy_field}}
+
+                <br>
+
+                {{form.emergency_contact_phone|as_crispy_field}}
+               
+                <button type="submit" class="btn btn-primary" > 
+                    
+                    Create a patient &nbsp; <i class="fa fa-check" ></i>
+
+                </button>
+                &nbsp;
+
+                <a href="{% url 'list-patient' %}" class="btn btn-secondary"> 
+                    Return &nbsp; <i class="fa fa-arrow-left" ></i>
+                </a>
+            </form>
+        </div>
+        <br>
+    </body>
+
+{% endblock %}
+
+
+
+
